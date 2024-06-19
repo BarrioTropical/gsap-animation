@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html{
+            overscroll-behavior: none;
+        }
+
+        ::-webkit-scrollbar{
+            display: none;
+        }
+
+        html, body{
+            font-family: Arial, Helvetica, sans-serif;
+            height: 100%;
+        }
+
+        h1{
+            font-size: 80px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        p{
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 1.5;
+            width: 50%;
+        }
+
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo{
+            position: fixed;
+            top: 0;
+            right: 0;
+            margin: 2em;
+            width: 18px;
+            height: 18px;
+            background: red;
+            border-radius: 100%;
+            z-index: 10000;
+        }
+
+        .header{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            width: 100%;
+            z-index: 2;
+        }
+
+        .letters{
+            flex: 1;
+            display: flex;
+            text-transform: uppercase;
+        }
+
+        .letters > div{
+            flex: 1;
+            font-size: 18vw;
+            font-weight: 400;
+            color: #000;
+            text-align: center;
+        }
+
+        .website-content{
+            position: fixed;
+            top: 0;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .img-holder{
+            position: relative;
+            top: 0;
+            width: 100%;
+            height: 100vh;
+            background: #fff;
+            clip-path: polygon(37.5% 20%, 62.5% 20%, 62.5% 80%, 37.5% 80%);
+            transform: rotate(30deg);
+        }
+
+        .img-holder img{
+            position: relative;
+            transform: scale(2);
+        }
+
+        .content-holder{
+            position: relative;
+            top: -5px;
+            width: 100%;
+            background: #000;
+            color: #fff;
+            padding: 1em;
+        }
+
+        .row{
+            margin: 2em 1em;
+        }
+
+        .img{
+            width: 200px;
+            height: 275px;
+        }
+
+        .row:nth-child(2) .img{
+            position: relative;
+            left: 50%;
+        }
+
+        .row:nth-child(3) .img{
+            position: relative;
+            left: 15%;
+        }
+
+        .row:nth-child(4) .img{
+            position: relative;
+            left: 70%;
+        }
+
+        .row:nth-child(6) p{
+            position: relative;
+            left: 30%;
+            margin: 4em 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo"></div>
+    <div class="header">
+        <div class="letters">
+            <div>a</div>
+            <div>r</div>
+            <div>t</div>
+            <div>w</div>
+        </div>
+
+        <div class="letters">
+            <div>o</div>
+            <div>r</div>
+            <div>k</div>
+            <div>s</div>
+        </div>
+    </div>
+
+    <div class="website-content">
+        <div class="img-holder">
+            <img src="https://images.pexels.com/photos/24771907/pexels-photo-24771907/free-photo-of-natura-campo-estate-sole.jpeg" alt="">
+        </div>
+
+        <div class="content-holder">
+            <div class="row">
+                <h1>History</h1>
+            </div>
+            <div class="row">
+                <div class="img">
+                    <img src="https://images.pexels.com/photos/24838149/pexels-photo-24838149/free-photo-of-raffreddore-freddo-ghiacciaio-neve.jpeg" alt="">
+                </div>
+            </div>
+            <div class="row">
+                <div class="img">
+                    <img src="https://images.pexels.com/photos/26236827/pexels-photo-26236827/free-photo-of-neve-inverno-animale-carino.jpeg" alt="">
+                </div>
+            </div>
+            <div class="row">
+                <div class="img">
+                    <img src="https://images.pexels.com/photos/18592009/pexels-photo-18592009/free-photo-of-citta-acqua-strada-tetto.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load" alt="">
+                </div>
+            </div>
+
+            <div class="row">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+
+            <div class="row">
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        document.addEventListener("DOMContentLoaded", function(){
+            const contentHolderHeight = document.querySelector(".content-holder").offsetHeight;
+            const imgHolderHeight = window.innerHeight;
+            const additionalScrollHeight = window.innerHeight;
+
+            const totalBodyHeight = contentHolderHeight + imgHolderHeight + additionalScrollHeight;
+            document.body.style.height = `${totalBodyHeight}px`;
+        });
+
+        ScrollTrigger.create({
+            trigger: ".website-content",
+            start: "-0.1% top",
+            end: "bottom bottom",
+            onEnter: () => {
+                gsap.set(".website-content", {position: 'absolute', top:'195%'});
+            },
+            onLeaveBack: () => {
+                gsap.set(".website-content", {position: 'fixed', top: '0'});
+            }
+        })
+
+        gsap.to(".header .letters:first-child", {
+            x: () => -innerWidth * 3,
+            scale: 10,
+            ease: "power2.inOut",
+            scrollTrigger: {
+                start: "top top",
+                end: `+=200%`,
+                scrub: 1
+            }
+        });
+
+        gsap.to(".header .letters:last-child", {
+            x: () => innerWidth * 3,
+            scale: 10,
+            ease: "power2.inOut",
+            scrollTrigger: {
+                start: "top top",
+                end: `+=200%`,
+                scrub: 1
+            }
+        });
+
+        gsap.to(".img-holder",{
+            rotation: 0,
+            clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+            ease: "power2.inOut",
+            scrollTrigger: {
+                start: "top top",
+                end: `+=200%`,
+                scrub: 1
+            }
+        });
+
+        gsap.to(".img-holder img",{
+            scale: 1,
+            ease: "power2.inOut",
+            scrollTrigger: {
+                start: "top top",
+                end: `+=200%`,
+                scrub: 1
+            }
+        });
+    </script>
+</body>
+</html>
